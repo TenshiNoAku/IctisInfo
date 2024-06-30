@@ -7,7 +7,7 @@ use App\Repository\ClassTimeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ClassTimeRepository::class)]
-#[ApiResource]
+
 class ClassTime
 {
     #[ORM\Id]

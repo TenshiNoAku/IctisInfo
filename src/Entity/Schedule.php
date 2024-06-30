@@ -6,9 +6,10 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ScheduleRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
+use App\Entity\ClassType;
 #[ORM\Entity(repositoryClass: ScheduleRepository::class)]
-#[ApiResource]
+
+
 class Schedule
 {
     #[ORM\Id]
@@ -19,11 +20,11 @@ class Schedule
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(targetEntity: ClassType::class, fetch:'EAGER')]
     #[ORM\JoinColumn(nullable: false)]
     private ?ClassType $classType = null;
 
-    #[ORM\ManyToOne(inversedBy: 'schedules')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Audience $audience = null;
 
@@ -31,8 +32,8 @@ class Schedule
     #[ORM\JoinColumn(nullable: false)]
     private ?ClassTime $classTime = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
+    #[ORM\Column(length: 255)]
+    private ?string $date = null;
 
     public function getId(): ?int
     {
@@ -87,12 +88,12 @@ class Schedule
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?string
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): static
+    public function setDate(string $date): static
     {
         $this->date = $date;
 
